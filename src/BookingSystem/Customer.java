@@ -8,7 +8,7 @@ public class Customer {
     private String customerName;
     private long customerPhnNumber;
 
-    public Customer(String name, long number){
+    public Customer(String name, long number) {
         this.customerName = name;
         this.customerPhnNumber = number;
     }

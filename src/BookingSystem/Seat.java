@@ -2,7 +2,7 @@ package BookingSystem;
 
 /**
  * Created by Dennis on 14.04.2017.
- *
+ * <p>
  * Diese Klasse wird lediglich von der Theater-Klasse verwendet. Es werden viele Seat-Objekte in Theater-Objekten gespeichert, da ein Theater
  * mehrere Sitzplätze haben kann
  */

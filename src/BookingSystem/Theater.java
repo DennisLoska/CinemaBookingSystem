@@ -26,7 +26,6 @@ public class Theater {
     private ArrayList<Seat> seats = new ArrayList<>();
 
     public Theater(int seatAmount, int rowAmount) {
-
         //Prüft, ob die Parameter mit der maximalen verfügbaren Anzahl von Sitzen und Reihen übereinstimmen
         if (seatAmount <= MAX_SEATAMOUNT)
             this.seatAmount = seatAmount;
