@@ -26,6 +26,8 @@ public class Theater {
     private ArrayList<Seat> seats = new ArrayList<>();
 
     public Theater(int seatAmount, int rowAmount) {
+
+        //Prüft, ob die Parameter mit der maximalen verfügbaren Anzahl von Sitzen und Reihen übereinstimmen
         if (seatAmount <= MAX_SEATAMOUNT)
             this.seatAmount = seatAmount;
         else System.out.println("The limit of seats is: " + MAX_SEATAMOUNT);
@@ -33,7 +35,10 @@ public class Theater {
             this.rowAmount = rowAmount;
         else System.out.println("The limit of rows is: " + MAX_ROWAMOUNT);
 
+        //Prüft im äußeren Loop zunächst, ob es weitere Reihen gibt
         for (int j = 1; j < rowAmount; j++) {
+            //Wenn nächste Reihe vorhanden, werden solange Sitz-Objekte pro Reihe erstellt,
+            // bis "seatsPerRow" erreicht ist
             for (int k = 1; k <= seatsPerRow; k++) {
                 Seat seat;
                 seat = new Seat(k, rowLetters[j - 1]);
@@ -41,11 +46,13 @@ public class Theater {
                 //System.out.println(seat.getRowLetter() + seat.getSeatNumber());
             }
             int seatCounter = seatsPerRow * j;
+            //Beendet den Loop sofort, wenn die im Parameter angegebene Sitzanzahl erreicht wird
             if (seatCounter >= seatAmount)
                 break;
         }
     }
 
+    //einfache Getter- und Setter-Methoden
     public int getSeatAmount() {
         return seatAmount;
     }
