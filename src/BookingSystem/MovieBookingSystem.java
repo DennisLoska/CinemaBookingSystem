@@ -1,6 +1,7 @@
 package BookingSystem;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -59,7 +60,7 @@ public class MovieBookingSystem {
     }
 
     private void printQuestionsToCustomer(Scanner sc) {
-            printWelcome(sc);
+        printWelcome(sc);
         if (sc.next().toUpperCase().equals("J")) {
             printSeatingPlan();
         } else {
@@ -81,7 +82,16 @@ public class MovieBookingSystem {
     }
 
     private void printSeatingPlan() {
-        //TODO Sitzplan ausgeben lassen
+        Screening screening = schedule.getScreenings().get(getMovieName() + getDate());
+        int i = 1;
+        for (Map.Entry<String, ?> entry : screening.getTheater().getSeats().entrySet()) {
+            Seat seat = screening.getTheater().getSeats().get(entry.getKey());
+            System.out.print(seat.getRowLetter() + seat.getSeatNumber() + " " + seat.isReserved() + "  ");
+            if (i % 20 == 0) {
+                System.out.println("\n");
+            }
+            i++;
+        }
     }
 
     private void printSelectSeatAndRow() {
@@ -130,11 +140,11 @@ public class MovieBookingSystem {
         //TODO adjoined überprüfen seatNumber oder reservedSeats
         Booking booking;
         if (isAdjoined()) {
-            booking = new Booking(getCustomer(),getSchedule());
-            return booking.findScreening(getMovieName(),getRowLetter(),getReservedSeats(),getDate());
+            booking = new Booking(getCustomer(), getSchedule());
+            return booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
         } else
-            booking = new Booking(getCustomer(),getSchedule());
-        return booking.findScreening(getMovieName(),getRowLetter(),getSeatNumber(),getDate());
+            booking = new Booking(getCustomer(), getSchedule());
+        return booking.findScreening(getMovieName(), getRowLetter(), getSeatNumber(), getDate());
     }
 
     //einfache Getter- und Setter-Methoden

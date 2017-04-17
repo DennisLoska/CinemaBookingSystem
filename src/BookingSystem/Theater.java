@@ -1,6 +1,7 @@
 package BookingSystem;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by Dennis on 11.04.2017.
@@ -24,7 +25,7 @@ public class Theater {
 
     private String[] rowLetters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
 
-    private HashMap<String,Seat> seats = new HashMap<>();
+    private TreeMap<String,Seat> seats = new TreeMap<>();
 
     public Theater(String theaterName, int seatAmount, int rowAmount) {
         this.theaterName = theaterName;
@@ -78,7 +79,7 @@ public class Theater {
         else System.out.println("The limit of rows is: " + MAX_ROWAMOUNT);
     }
 
-    public HashMap<String,Seat> getSeats() {
+    public TreeMap<String,Seat> getSeats() {
         return seats;
     }
 }
