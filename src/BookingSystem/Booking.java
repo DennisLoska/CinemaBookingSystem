@@ -21,13 +21,13 @@ public class Booking {
 
     public boolean findScreening(String movieName, String rowLetter, int seatNumber, String date) {
         //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
-        Screening screening = schedule.getScreenings().get(movieName+date);
+        Screening screening = schedule.getScreenings().get(movieName + date);
         return screening.reserveSeats(rowLetter, seatNumber);
     }
 
     public boolean findScreening(String movieName, String rowLetter, int[] seatNumbers, String date) {
         //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
-        Screening screening = schedule.getScreenings().get(movieName+date);
+        Screening screening = schedule.getScreenings().get(movieName + date);
         return screening.reserveSeats(rowLetter, seatNumbers[0]);
     }
 
