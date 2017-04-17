@@ -34,7 +34,7 @@ public class Booking {
         return true;
     }
 
-    public void deleteReservation(Screening screening){
+    public void deleteReservation(){
         //TODO Reservierungen wieder löschen
     }
 

@@ -1,5 +1,7 @@
 package BookingSystem;
 
+import org.omg.SendingContext.RunTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,6 @@ public class MovieBookingSystem {
         MovieBookingSystem system = new MovieBookingSystem();
         system.createSystem();
         system.mainMenu();
-        system.prepareReservation(sc);
     }
 
     private void createSystem() {
@@ -67,16 +68,18 @@ public class MovieBookingSystem {
             printSeatingPlan();
         }
         printSelectSeatAndRow();
-        //weiter geht es in der Methode "prepareReservation()"
+        prepareReservation(sc);
+        backToMainMenu();
     }
 
     private void printWelcome(Scanner sc) {
         System.out.println("Willkommen im Buchungssystem. Für welchen Film möchten Sie Plätze reservieren (\"Filmname\")?\n");
         showScreenings();
+        sc.nextLine();
         setMovieName(sc.nextLine());
-        System.out.println("Bitte geben Sie das gewünschte Datum mit Uhrzeit an (\"dd.MM.yyyy HH:mm\"): ");
+        System.out.println("\nBitte geben Sie das gewünschte Datum mit Uhrzeit an (\"dd.MM.yyyy HH:mm\"): \n");
         setDate(sc.nextLine());
-        System.out.println("Sie haben sich für \"" + getMovieName() + "\" entschieden.\nMöchten sie sich den Sitzplan anzeigen lassen? (J/N): ");
+        System.out.println("\nSie haben sich für \"" + getMovieName() + "\" entschieden.\nMöchten sie sich den Sitzplan anzeigen lassen? (J/N): ");
     }
 
     private void printSeatingPlan() {
@@ -91,7 +94,10 @@ public class MovieBookingSystem {
                 }
                 i++;
             }
-        else System.out.println("Sie haben noch keinen Film ausgewählt!");
+        else {
+            System.out.println("Sie haben noch keinen Film ausgewählt!\n");
+        }
+        backToMainMenu();
     }
 
     private void printSelectSeatAndRow() {
@@ -120,7 +126,6 @@ public class MovieBookingSystem {
                 System.out.println("Ihre Reservierung wird bearbeitet...");
                 if (bookMovie())
                     System.out.println("Die Reservierung war erfolgreich. Vielen Dank für Ihre Reservierung.");
-
                 else
                     System.out.println("Leider war die Reservierung nicht erfolgreich. Bitte probieren Sie es noch einmal.");
                 break;
@@ -154,33 +159,57 @@ public class MovieBookingSystem {
         } else return false;
     }
 
+    private void showScreeningsMenu() {
+        for (String key : schedule.getScreenings().keySet()) {
+            System.out.println("Name: " + schedule.getScreenings().get(key).getMovie() + "\t\t\tDatum: " + schedule.getScreenings().get(key).getDateText());
+        }
+        System.out.println("");
+        backToMainMenu();
+    }
+
     private void showScreenings() {
         for (String key : schedule.getScreenings().keySet()) {
             System.out.println("Name: " + schedule.getScreenings().get(key).getMovie() + "\t\t\tDatum: " + schedule.getScreenings().get(key).getDateText());
         }
+        System.out.println("");
     }
 
     private void showReservationCost(Booking booking) {
         if (booking.getPrice() == 0)
-            System.out.println("Sie haben noch nichts reserviert!");
-        else System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro.");
+            System.out.println("Sie haben noch nichts reserviert!\n");
+        else System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro");
+        backToMainMenu();
+    }
+
+    private void backToMainMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Möchten Sie zurück in das Hauptmenü? (J/N)");
+        if (sc.next().toUpperCase().equals("J")) {
+            mainMenu();
+        } else System.exit(0);
     }
 
     private void mainMenu() {
-        System.out.println("Hauptmenü - Bitte wählen Sie eine Funktion:");
+        System.out.println("\nHauptmenü - Bitte wählen Sie eine Funktion:");
         System.out.println("(1) Reservierung tätigen \n(2) Filmtermine anzeigen" +
                 "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen ");
         Scanner sc = new Scanner(System.in);
         switch (sc.nextInt()) {
             case 1:
                 printQuestionsToCustomer(sc);
+                break;
             case 2:
-                showScreenings();
+                showScreeningsMenu();
+                break;
             case 3:
                 printSeatingPlan();
+                break;
             case 4:
+                booking.deleteReservation();
+                break;
             case 5:
                 showReservationCost(booking);
+                break;
         }
     }
 
