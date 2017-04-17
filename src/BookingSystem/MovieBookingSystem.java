@@ -17,7 +17,6 @@ public class MovieBookingSystem {
     private int[] reservedSeats = new int[20];
     private boolean adjoined = false;
 
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         MovieBookingSystem system = new MovieBookingSystem();
@@ -64,7 +63,7 @@ public class MovieBookingSystem {
         if (sc.next().toUpperCase().equals("J")) {
             printSeatingPlan();
         } else {
-            printSelectSeatAndRow(sc);
+            printSelectSeatAndRow();
         }
         //weiter geht es in der Methode "prepareReservation()"
     }
@@ -82,13 +81,13 @@ public class MovieBookingSystem {
     }
 
     private void printSeatingPlan() {
-
+        //TODO Sitzplan ausgeben lassen
     }
 
-    private void printSelectSeatAndRow(Scanner sc) {
+    private void printSelectSeatAndRow() {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Bitte geben Sie Ihre gewünschte Sitzreihe an (A-O): ");
-        rowLetter = sc.next();
-        setRowLetter(sc.nextLine().toUpperCase());
+        setRowLetter(sc.next().toUpperCase());
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         setSeatNumber(sc.nextInt());
         sc.nextLine();
@@ -96,7 +95,7 @@ public class MovieBookingSystem {
         getCustomer().setCustomerName(sc.nextLine());
         System.out.println("Bitte geben Sie Ihre Telefonnummer an (0303322345): ");
         getCustomer().setCustomerPhnNumber(sc.nextInt());
-        sc.nextLine();
+        sc.reset();
     }
 
     private void prepareReservation(Scanner sc) {
@@ -105,7 +104,7 @@ public class MovieBookingSystem {
             System.out.println("Möchten Sie einen weiteren Sitz wählen? (J/N): ");
             if (sc.next().toUpperCase().equals("J")) {
                 reserveManySeats(sc, i);
-                sc.nextLine();
+                sc.reset();
             } else {
                 System.out.println("Ihre Reservierung wird bearbeitet...");
                 if (bookMovie())
