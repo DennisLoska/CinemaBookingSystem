@@ -62,9 +62,8 @@ public class MovieBookingSystem {
         printWelcome(sc);
         if (sc.next().toUpperCase().equals("J")) {
             printSeatingPlan();
-        } else {
-            printSelectSeatAndRow();
         }
+        printSelectSeatAndRow();
         //weiter geht es in der Methode "prepareReservation()"
     }
 
@@ -109,10 +108,10 @@ public class MovieBookingSystem {
 
     private void prepareReservation(Scanner sc) {
         int i = 1;
-        while (i <= 300) {
+        while (i <= 20) {
             System.out.println("Möchten Sie einen weiteren Sitz wählen? (J/N): ");
             if (sc.next().toUpperCase().equals("J")) {
-                reserveManySeats(sc, i);
+                i = reserveManySeats(sc, i);
                 sc.reset();
             } else {
                 System.out.println("Ihre Reservierung wird bearbeitet...");
@@ -125,7 +124,7 @@ public class MovieBookingSystem {
         }
     }
 
-    private void reserveManySeats(Scanner sc, int i) {
+    private int reserveManySeats(Scanner sc, int i) {
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         int nextSeat = sc.nextInt();
         i++;
@@ -133,10 +132,11 @@ public class MovieBookingSystem {
             setAdjoined(true);
         reservedSeats[0] = seatNumber;
         reservedSeats[i] = nextSeat;
+
+        return i;
     }
 
     private boolean bookMovie() {
-        //TODO adjoined überprüfen seatNumber oder reservedSeats
         Booking booking;
         if (isAdjoined()) {
             booking = new Booking(getCustomer(), getSchedule());

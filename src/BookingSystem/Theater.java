@@ -43,7 +43,9 @@ public class Theater {
             for (int k = 1; k <= seatsPerRow; k++) {
                 Seat seat;
                 seat = new Seat(k, rowLetters[j - 1]);
-                seats.put(rowLetters[j - 1] + k, seat);
+                if (k < 10)
+                    seats.put(rowLetters[j - 1] + 0 + k, seat);
+                else seats.put(rowLetters[j - 1] + k, seat);
                 //System.out.println(seat.getRowLetter() + seat.getSeatNumber());
             }
             int seatCounter = seatsPerRow * j;
