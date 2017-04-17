@@ -28,11 +28,9 @@ public class MovieBookingSystemTest {
     Theater theater_2 = new BookingSystem.Theater("Theater 2",50, 2);
     Theater theater_3 = new BookingSystem.Theater("Theater 3",300, 2);
 
-    Date date1 = new Date(Calendar.DAY_OF_YEAR);
-
-    Screening s1 = new Screening("GoodFilm", theater_1, date1);
-    Screening s2 = new BookingSystem.Screening("BadFilm", theater_2, date1);
-    Screening s3 = new BookingSystem.Screening("IntermediateFilm", theater_3, date1);
+    Screening s1 = new Screening("GoodFilm", theater_1, "");
+    Screening s2 = new BookingSystem.Screening("BadFilm", theater_2, "");
+    Screening s3 = new BookingSystem.Screening("IntermediateFilm", theater_3, "");
 
     @Test
     public void createCustomers() throws Exception {

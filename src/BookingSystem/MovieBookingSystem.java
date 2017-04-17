@@ -1,5 +1,6 @@
 package BookingSystem;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -21,8 +22,8 @@ public class MovieBookingSystem {
         Scanner sc = new Scanner(System.in);
         MovieBookingSystem system = new MovieBookingSystem();
         system.createSystem();
-        system.printQuestionsToCustomer(sc, system);
-        system.prepareReservation(sc, system);
+        system.printQuestionsToCustomer(sc);
+        system.prepareReservation(sc);
     }
 
     private void createSystem() {
@@ -34,7 +35,7 @@ public class MovieBookingSystem {
         Theater theater_6 = new Theater("Theater 6", 200, 13);
         Screening s1 = new Screening("GoodFilm", theater_1, "01.05.2017 18:00:00");
         Screening s2 = new Screening("BadFilm", theater_2, "02.05.2017 19:00:00");
-        Screening s3 = new Screening("IntermediateFilm", theater_3, "03.05.2017 20:30:00");
+        Screening s3 = new Screening("EduFilm", theater_3, "03.05.2017 20:30:00");
         Screening s4 = new Screening("NewFilm", theater_4, "04.05.2017 17:30:00");
         Screening s5 = new Screening("OldFilm", theater_5, "05.05.2017 16:00:00");
         Screening s6 = new Screening("ThisFilm", theater_6, "01.05.2017 18:45:00");
@@ -43,7 +44,7 @@ public class MovieBookingSystem {
         Screening s9 = new Screening("SadFilm", theater_3, "03.05.2017 21:45:00");
         Screening s10 = new Screening("GoodFilm", theater_4, "04.05.2017 22:45:00");
         Screening s11 = new Screening("BadFilm", theater_5, "05.05.2017 20:30:00");
-        Screening s12 = new Screening("IntermediateFilm", theater_6, "06.05.2017 21:00:00");
+        Screening s12 = new Screening("EduFilm", theater_6, "06.05.2017 21:00:00");
         schedule.getScreenings().put(s1.getMovie() + s1.getDateText(), s1);
         schedule.getScreenings().put(s2.getMovie() + s2.getDateText(), s2);
         schedule.getScreenings().put(s3.getMovie() + s3.getDateText(), s3);
@@ -58,53 +59,56 @@ public class MovieBookingSystem {
         schedule.getScreenings().put(s12.getMovie() + s12.getDateText(), s12);
     }
 
-    private void printQuestionsToCustomer(Scanner sc, MovieBookingSystem system) {
-        system.printWelcome(sc, system);
+    private void printQuestionsToCustomer(Scanner sc) {
+            printWelcome(sc);
         if (sc.next().toUpperCase().equals("J")) {
-            system.printSeatingPlan();
+            printSeatingPlan();
         } else {
-            system.printSelectSeatAndRow(sc, system);
+            printSelectSeatAndRow(sc);
         }
         //weiter geht es in der Methode "prepareReservation()"
     }
 
-    private void printWelcome(Scanner sc, MovieBookingSystem system) {
-        System.out.println("Willkommen im Buchungssystem. Für welchen Film möchten Sie Plätze reservieren?");
-        System.out.println("\nGoodFilm, BadFilm, IntermediateFilm, NewFilm, OldFilm, ThisFilm, ThatFilm, HappyFilm, SadFilm ");
-        system.setMovieName(sc.nextLine());
+    private void printWelcome(Scanner sc) {
+        System.out.println("Willkommen im Buchungssystem. Für welchen Film möchten Sie Plätze reservieren (\"Filmname\")?\n");
+        //System.out.println("\nGoodFilm, BadFilm, NormalFilm, NewFilm, OldFilm, ThisFilm, ThatFilm, HappyFilm, SadFilm ");
+        for (String key : schedule.getScreenings().keySet()) {
+            System.out.println("Name: " + schedule.getScreenings().get(key).getMovie() + "\t\t\tDatum: " + schedule.getScreenings().get(key).getDateText());
+        }
+        setMovieName(sc.nextLine());
         System.out.println("Bitte geben Sie das gewünschte Datum mit Uhrzeit an (\"dd.MM.yyyy HH:mm:ss\"): ");
-        system.setDate(sc.nextLine());
-        System.out.println("Sie haben sich für \"" + system.getMovieName() + "\" entschieden.\nMöchten sie sich den Sitzplan anzeigen lassen? (J/N): ");
+        setDate(sc.nextLine());
+        System.out.println("Sie haben sich für \"" + getMovieName() + "\" entschieden.\nMöchten sie sich den Sitzplan anzeigen lassen? (J/N): ");
     }
 
     private void printSeatingPlan() {
 
     }
 
-    private void printSelectSeatAndRow(Scanner sc, MovieBookingSystem system) {
+    private void printSelectSeatAndRow(Scanner sc) {
         System.out.println("Bitte geben Sie Ihre gewünschte Sitzreihe an (A-O): ");
-        system.setRowLetter(sc.nextLine().toUpperCase());
-        sc.nextLine();
+        rowLetter = sc.next();
+        setRowLetter(sc.nextLine().toUpperCase());
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
-        system.setSeatNumber(sc.nextInt());
+        setSeatNumber(sc.nextInt());
         sc.nextLine();
         System.out.println("Bitte geben Sie Ihren vollständigen Namen an (\"Max Mustermann\"): ");
-        system.getCustomer().setCustomerName(sc.nextLine());
+        getCustomer().setCustomerName(sc.nextLine());
         System.out.println("Bitte geben Sie Ihre Telefonnummer an (0303322345): ");
-        system.getCustomer().setCustomerPhnNumber(sc.nextInt());
+        getCustomer().setCustomerPhnNumber(sc.nextInt());
         sc.nextLine();
     }
 
-    private void prepareReservation(Scanner sc, MovieBookingSystem system) {
+    private void prepareReservation(Scanner sc) {
         int i = 1;
         while (i <= 300) {
             System.out.println("Möchten Sie einen weiteren Sitz wählen? (J/N): ");
             if (sc.next().toUpperCase().equals("J")) {
-                system.reserveManySeats(sc, system, i);
+                reserveManySeats(sc, i);
                 sc.nextLine();
             } else {
                 System.out.println("Ihre Reservierung wird bearbeitet...");
-                if (system.bookMovie(system))
+                if (bookMovie())
                     System.out.println("Die Reservierung war erfolgreich. Vielen Dank für Ihre Reservierung.");
                 else
                     System.out.println("Leider war die Reservierung nicht erfolgreich. Bitte probieren Sie es noch einmal.");
@@ -113,25 +117,25 @@ public class MovieBookingSystem {
         }
     }
 
-    private void reserveManySeats(Scanner sc, MovieBookingSystem system, int i) {
+    private void reserveManySeats(Scanner sc, int i) {
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         int nextSeat = sc.nextInt();
         i++;
-        if (nextSeat == system.getSeatNumber() + 1 || nextSeat == system.getSeatNumber() - 1)
-            system.setAdjoined(true);
+        if (nextSeat == getSeatNumber() + 1 || nextSeat == getSeatNumber() - 1)
+            setAdjoined(true);
         reservedSeats[0] = seatNumber;
         reservedSeats[i] = nextSeat;
     }
 
-    private boolean bookMovie(MovieBookingSystem system) {
+    private boolean bookMovie() {
         //TODO adjoined überprüfen seatNumber oder reservedSeats
         Booking booking;
         if (isAdjoined()) {
-            booking = new Booking(system.getCustomer(), system.getSchedule());
-            return booking.findScreening(system.getMovieName(), system.getRowLetter(), system.getReservedSeats(), system.getDate());
+            booking = new Booking(getCustomer(),getSchedule());
+            return booking.findScreening(getMovieName(),getRowLetter(),getReservedSeats(),getDate());
         } else
-            booking = new Booking(system.getCustomer(), system.getSchedule());
-        return booking.findScreening(system.getMovieName(), system.getRowLetter(), system.getSeatNumber(), system.getDate());
+            booking = new Booking(getCustomer(),getSchedule());
+        return booking.findScreening(getMovieName(),getRowLetter(),getSeatNumber(),getDate());
     }
 
     //einfache Getter- und Setter-Methoden
