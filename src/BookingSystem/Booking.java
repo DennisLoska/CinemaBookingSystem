@@ -28,17 +28,17 @@ public class Booking {
 
     public boolean findScreening(String movieName, String rowLetter, List<Integer> seatNumbers, String date) {
         Screening screening = schedule.getScreenings().get(movieName + date);
-        for (int i = 0; i < seatNumbers.size() ; i++) {
+        for (int i = 0; i < seatNumbers.size(); i++) {
             screening.reserveSeats(rowLetter, seatNumbers.get(i));
         }
         return true;
     }
 
-    public void deleteReservation(){
+    public void deleteReservation() {
         //TODO Reservierungen wieder löschen
     }
 
-    public void showReservedSeats(){
+    public void showReservedSeats() {
         //TODO Liste von reservierten Sitzen printen
     }
 
