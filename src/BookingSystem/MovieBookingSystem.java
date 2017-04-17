@@ -1,5 +1,7 @@
 package BookingSystem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,7 +16,7 @@ public class MovieBookingSystem {
     private String date;
     private String rowLetter;
     private int seatNumber;
-    private int[] reservedSeats = new int[20];
+    private List<Integer> reservedSeats = new ArrayList<>();
     private boolean adjoined = false;
 
     public static void main(String[] args) {
@@ -99,6 +101,7 @@ public class MovieBookingSystem {
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         setSeatNumber(sc.nextInt());
         sc.nextLine();
+        reservedSeats.add(seatNumber);
         System.out.println("Bitte geben Sie Ihren vollständigen Namen an (\"Max Mustermann\"): ");
         getCustomer().setCustomerName(sc.nextLine());
         System.out.println("Bitte geben Sie Ihre Telefonnummer an (0303322345): ");
@@ -128,22 +131,27 @@ public class MovieBookingSystem {
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         int nextSeat = sc.nextInt();
         i++;
-        if (nextSeat == getSeatNumber() + 1 || nextSeat == getSeatNumber() - 1)
+        if (nextSeat == getSeatNumber() + 1 || nextSeat == getSeatNumber() - 1) {
             setAdjoined(true);
-        reservedSeats[0] = seatNumber;
-        reservedSeats[i] = nextSeat;
-
+            setSeatNumber(nextSeat);
+            reservedSeats.add(nextSeat);
+        } else System.out.println("Sie können nur weitere benachbarte Sitze reservieren!");
         return i;
     }
 
     private boolean bookMovie() {
-        Booking booking;
-        if (isAdjoined()) {
-            booking = new Booking(getCustomer(), getSchedule());
-            return booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
-        } else
-            booking = new Booking(getCustomer(), getSchedule());
-        return booking.findScreening(getMovieName(), getRowLetter(), getSeatNumber(), getDate());
+        Booking booking = new Booking(getCustomer(), getSchedule());
+        if (isAdjoined() && getReservedSeats().size() > 1) {
+            boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
+            booking.calcPrice(getReservedSeats().size());
+            System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro.");
+            return reservationSuccessful;
+        } else if (getReservedSeats().size() == 1) {
+            boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getSeatNumber(), getDate());
+            booking.calcPrice(1);
+            System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro.");
+            return reservationSuccessful;
+        } else return false;
     }
 
     //einfache Getter- und Setter-Methoden
@@ -195,11 +203,11 @@ public class MovieBookingSystem {
         this.customer = customer;
     }
 
-    private int[] getReservedSeats() {
+    private List<Integer> getReservedSeats() {
         return reservedSeats;
     }
 
-    public void setReservedSeats(int[] reservedSeats) {
+    public void setReservedSeats(List<Integer> reservedSeats) {
         this.reservedSeats = reservedSeats;
     }
 

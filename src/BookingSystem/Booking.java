@@ -1,5 +1,7 @@
 package BookingSystem;
 
+import java.util.List;
+
 /**
  * Created by Dennis on 11.04.2017.
  */
@@ -15,25 +17,35 @@ public class Booking {
         this.schedule = schedule;
     }
 
-    private double calcPrice(String movieName, String date) {
-        return price;
+    public void calcPrice(int seatAmount) {
+        this.price = seatAmount * PRICE_PER_SEAT;
     }
 
     public boolean findScreening(String movieName, String rowLetter, int seatNumber, String date) {
-        //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
+        //TODO if-else mit datum und uhrzeit
         Screening screening = schedule.getScreenings().get(movieName + date);
         return screening.reserveSeats(rowLetter, seatNumber);
     }
 
-    public boolean findScreening(String movieName, String rowLetter, int[] seatNumbers, String date) {
-        //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
+    public boolean findScreening(String movieName, String rowLetter, List<Integer> seatNumbers, String date) {
+        //TODO if-else mit datum
         Screening screening = schedule.getScreenings().get(movieName + date);
-        return screening.reserveSeats(rowLetter, seatNumbers[0]);
+        for (int i = 0; i < seatNumbers.size() ; i++) {
+            //System.out.println(screening.reserveSeats(rowLetter, seatNumbers.get(i)));
+            screening.reserveSeats(rowLetter, seatNumbers.get(i));
+        }
+        return true;
+    }
+
+    public void deleteReservation(Screening screening){
+        //TODO Reservierungen wieder löschen
+    }
+
+    public void showReservedSeats(){
+        //TODO Liste von reservierten Sitzen printen
     }
 
     public double getPrice() {
-        double price = 0;
-        this.price = price;
         return price;
     }
 
