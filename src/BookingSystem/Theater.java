@@ -1,6 +1,7 @@
 package BookingSystem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Dennis on 11.04.2017.
@@ -24,7 +25,7 @@ public class Theater {
 
     private String[] rowLetters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"};
 
-    private ArrayList<Seat> seats = new ArrayList<>();
+    private HashMap<String,Seat> seats = new HashMap<>();
 
     public Theater(String theaterName, int seatAmount, int rowAmount) {
         this.theaterName = theaterName;
@@ -42,8 +43,8 @@ public class Theater {
             // bis "seatsPerRow" erreicht ist
             for (int k = 1; k <= seatsPerRow; k++) {
                 Seat seat;
-                seat = new Seat(k, rowLetters[j-1]);
-                seats.add(seat);
+                seat = new Seat(k, rowLetters[j - 1]);
+                seats.put(rowLetters[j - 1]+k,seat);
                 //System.out.println(seat.getRowLetter() + seat.getSeatNumber());
             }
             int seatCounter = seatsPerRow * j;
@@ -76,5 +77,9 @@ public class Theater {
         if (rowAmount <= MAX_ROWAMOUNT)
             this.rowAmount = rowAmount;
         else System.out.println("The limit of rows is: " + MAX_ROWAMOUNT);
+    }
+
+    public HashMap<String,Seat> getSeats() {
+        return seats;
     }
 }

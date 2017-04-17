@@ -8,6 +8,8 @@ public class Customer {
     private String customerName;
     private int customerPhnNumber;
 
+    public Customer(){}
+
     public Customer(String name, int number) {
         this.customerName = name;
         this.customerPhnNumber = number;

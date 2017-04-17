@@ -10,6 +10,7 @@ public class Seat {
 
     private int seatNumber;
     private String rowLetter;
+    private boolean reserved = false;
 
     public Seat(int seatNumber, String rowLetter) {
         this.seatNumber = seatNumber;
@@ -25,4 +26,11 @@ public class Seat {
         return rowLetter;
     }
 
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
 }

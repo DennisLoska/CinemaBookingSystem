@@ -39,7 +39,17 @@ public class Screening {
     }
 
     //TODO Datum verändern, um einem Screening Stunde und Minuten zuzuweisen.
-    public Date getDayHour(){
+    public Date getDayHour() {
         return date;
+    }
+
+    public boolean reserveSeats(String rowLetter, int seatNumber) {
+        String seatNr = Integer.toString(seatNumber);
+        Seat preferedSeat = theater.getSeats().get(rowLetter+seatNr);
+        System.out.println(preferedSeat.getRowLetter() + preferedSeat.getSeatNumber());
+        if (!(preferedSeat.isReserved())) {
+            preferedSeat.setReserved(true);
+            return true;
+        } else return false;
     }
 }

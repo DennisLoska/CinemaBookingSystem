@@ -9,26 +9,29 @@ public class Booking {
 
     private double price;
     private Customer customer;
+    private Schedule schedule;
 
-    public Booking(Customer customer) {
+    public Booking(Customer customer, Schedule schedule) {
         this.customer = customer;
+        this.schedule = schedule;
     }
-    /* geplante Methoden - Teilimplementiert
-    private double calcPrice(Schedule schedule){
+
+    private double calcPrice(Schedule schedule) {
         double price = 0;
         this.price = price;
         return price;
     }
 
-    public Screening getScreening(String movieName, Date date, String rowLetter, int seatNumber ){
-        Screening screening = new Screening();
-        return screening;
+    public boolean findScreening(String movieName, String rowLetter, int seatNumber, Date date) {
+        //TODO if-else mit datum und uhrzeit
+        Screening screening = schedule.getScreenings().get(movieName);
+        return screening.reserveSeats(rowLetter, seatNumber);
     }
 
-    public double getPrice(){
+    public double getPrice() {
         double price = 0;
         this.price = price;
         return price;
     }
-    */
+
 }
