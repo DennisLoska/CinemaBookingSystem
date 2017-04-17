@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Theater {
 
+    private String theaterName;
     private int seatAmount;
     private int rowAmount;
     private int seatsPerRow = 20;
@@ -25,7 +26,8 @@ public class Theater {
 
     private ArrayList<Seat> seats = new ArrayList<>();
 
-    public Theater(int seatAmount, int rowAmount) {
+    public Theater(String theaterName, int seatAmount, int rowAmount) {
+        this.theaterName = theaterName;
         //Prüft, ob die Parameter mit der maximalen verfügbaren Anzahl von Sitzen und Reihen übereinstimmen
         if (seatAmount <= MAX_SEATAMOUNT)
             this.seatAmount = seatAmount;
@@ -35,12 +37,12 @@ public class Theater {
         else System.out.println("The limit of rows is: " + MAX_ROWAMOUNT);
 
         //Prüft im äußeren Loop zunächst, ob es weitere Reihen gibt
-        for (int j = 1; j < rowAmount; j++) {
+        for (int j = 1; j <= rowAmount; j++) {
             //Wenn nächste Reihe vorhanden, werden solange Sitz-Objekte pro Reihe erstellt,
             // bis "seatsPerRow" erreicht ist
             for (int k = 1; k <= seatsPerRow; k++) {
                 Seat seat;
-                seat = new Seat(k, rowLetters[j - 1]);
+                seat = new Seat(k, rowLetters[j-1]);
                 seats.add(seat);
                 //System.out.println(seat.getRowLetter() + seat.getSeatNumber());
             }
@@ -52,6 +54,10 @@ public class Theater {
     }
 
     //einfache Getter- und Setter-Methoden
+    public String getTheaterName() {
+        return theaterName;
+    }
+
     public int getSeatAmount() {
         return seatAmount;
     }

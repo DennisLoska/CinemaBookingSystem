@@ -16,6 +16,7 @@ public class Seat {
         this.rowLetter = rowLetter;
     }
 
+    //einfache Get-Methoden
     public int getSeatNumber() {
         return seatNumber;
     }

@@ -37,4 +37,9 @@ public class Screening {
     public Date getDate() {
         return date;
     }
+
+    //TODO Datum verändern, um einem Screening Stunde und Minuten zuzuweisen.
+    public Date getDayHour(){
+        return date;
+    }
 }

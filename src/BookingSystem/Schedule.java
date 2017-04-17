@@ -15,6 +15,8 @@ public class Schedule {
     //Es bietet sich an als Key z.B. den Filmnamen des jeweiligen Screenings zu wählen
     private HashMap<String, Screening> screenings = new HashMap<>();
 
+    public Schedule(){}
+
     public HashMap<String, Screening> getScreenings() {
         return screenings;
     }

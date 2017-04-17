@@ -6,9 +6,9 @@ package BookingSystem;
 public class Customer {
 
     private String customerName;
-    private long customerPhnNumber;
+    private int customerPhnNumber;
 
-    public Customer(String name, long number) {
+    public Customer(String name, int number) {
         this.customerName = name;
         this.customerPhnNumber = number;
     }
@@ -21,11 +21,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public long getCustomerPhnNumber() {
+    public int getCustomerPhnNumber() {
         return customerPhnNumber;
     }
 
-    public void setCustomerPhnNumber(long customerPhnNumber) {
+    public void setCustomerPhnNumber(int customerPhnNumber) {
         this.customerPhnNumber = customerPhnNumber;
     }
 }
