@@ -44,7 +44,6 @@ public class Screening {
         return dateText;
     }
 
-    //TODO Datum verändern, um einem Screening Stunde und Minuten zuzuweisen.
     public SimpleDateFormat getDayHour() {
         return date;
     }

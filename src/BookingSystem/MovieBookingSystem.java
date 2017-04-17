@@ -12,6 +12,7 @@ public class MovieBookingSystem {
 
     private Customer customer = new Customer();
     private Schedule schedule = new Schedule();
+    private Booking booking = new Booking(customer, schedule);
     private String movieName;
     private String date;
     private String rowLetter;
@@ -23,7 +24,7 @@ public class MovieBookingSystem {
         Scanner sc = new Scanner(System.in);
         MovieBookingSystem system = new MovieBookingSystem();
         system.createSystem();
-        system.printQuestionsToCustomer(sc);
+        system.mainMenu();
         system.prepareReservation(sc);
     }
 
@@ -32,7 +33,7 @@ public class MovieBookingSystem {
         Theater theater_2 = new Theater("Theater 2", 150, 9);
         Theater theater_3 = new Theater("Theater 3", 100, 8);
         Theater theater_4 = new Theater("Theater 4", 65, 5);
-        Theater theater_5 = new Theater("Theater 5", 340, 15);
+        Theater theater_5 = new Theater("Theater 5", 280, 15);
         Theater theater_6 = new Theater("Theater 6", 200, 13);
         Screening s1 = new Screening("GoodFilm", theater_1, "01.05.2017 18:00:00");
         Screening s2 = new Screening("BadFilm", theater_2, "02.05.2017 19:00:00");
@@ -71,12 +72,9 @@ public class MovieBookingSystem {
 
     private void printWelcome(Scanner sc) {
         System.out.println("Willkommen im Buchungssystem. Für welchen Film möchten Sie Plätze reservieren (\"Filmname\")?\n");
-        //System.out.println("\nGoodFilm, BadFilm, NormalFilm, NewFilm, OldFilm, ThisFilm, ThatFilm, HappyFilm, SadFilm ");
-        for (String key : schedule.getScreenings().keySet()) {
-            System.out.println("Name: " + schedule.getScreenings().get(key).getMovie() + "\t\t\tDatum: " + schedule.getScreenings().get(key).getDateText());
-        }
+        showScreenings();
         setMovieName(sc.nextLine());
-        System.out.println("Bitte geben Sie das gewünschte Datum mit Uhrzeit an (\"dd.MM.yyyy HH:mm:ss\"): ");
+        System.out.println("Bitte geben Sie das gewünschte Datum mit Uhrzeit an (\"dd.MM.yyyy HH:mm\"): ");
         setDate(sc.nextLine());
         System.out.println("Sie haben sich für \"" + getMovieName() + "\" entschieden.\nMöchten sie sich den Sitzplan anzeigen lassen? (J/N): ");
     }
@@ -84,14 +82,16 @@ public class MovieBookingSystem {
     private void printSeatingPlan() {
         Screening screening = schedule.getScreenings().get(getMovieName() + getDate());
         int i = 1;
-        for (Map.Entry<String, ?> entry : screening.getTheater().getSeats().entrySet()) {
-            Seat seat = screening.getTheater().getSeats().get(entry.getKey());
-            System.out.print(seat.getRowLetter() + seat.getSeatNumber() + " " + seat.isReserved() + "  ");
-            if (i % 20 == 0) {
-                System.out.println("\n");
+        if (!(screening == null))
+            for (Map.Entry<String, ?> entry : screening.getTheater().getSeats().entrySet()) {
+                Seat seat = screening.getTheater().getSeats().get(entry.getKey());
+                System.out.print(seat.getRowLetter() + seat.getSeatNumber() + " " + seat.isReserved() + "  ");
+                if (i % 20 == 0) {
+                    System.out.println("\n");
+                }
+                i++;
             }
-            i++;
-        }
+        else System.out.println("Sie haben noch keinen Film ausgewählt!");
     }
 
     private void printSelectSeatAndRow() {
@@ -120,6 +120,7 @@ public class MovieBookingSystem {
                 System.out.println("Ihre Reservierung wird bearbeitet...");
                 if (bookMovie())
                     System.out.println("Die Reservierung war erfolgreich. Vielen Dank für Ihre Reservierung.");
+
                 else
                     System.out.println("Leider war die Reservierung nicht erfolgreich. Bitte probieren Sie es noch einmal.");
                 break;
@@ -140,7 +141,6 @@ public class MovieBookingSystem {
     }
 
     private boolean bookMovie() {
-        Booking booking = new Booking(getCustomer(), getSchedule());
         if (isAdjoined() && getReservedSeats().size() > 1) {
             boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
             booking.calcPrice(getReservedSeats().size());
@@ -149,9 +149,39 @@ public class MovieBookingSystem {
         } else if (getReservedSeats().size() == 1) {
             boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getSeatNumber(), getDate());
             booking.calcPrice(1);
-            System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro.");
+            showReservationCost(booking);
             return reservationSuccessful;
         } else return false;
+    }
+
+    private void showScreenings() {
+        for (String key : schedule.getScreenings().keySet()) {
+            System.out.println("Name: " + schedule.getScreenings().get(key).getMovie() + "\t\t\tDatum: " + schedule.getScreenings().get(key).getDateText());
+        }
+    }
+
+    private void showReservationCost(Booking booking) {
+        if (booking.getPrice() == 0)
+            System.out.println("Sie haben noch nichts reserviert!");
+        else System.out.println("Die Reservierung kostet " + booking.getPrice() + " Euro.");
+    }
+
+    private void mainMenu() {
+        System.out.println("Hauptmenü - Bitte wählen Sie eine Funktion:");
+        System.out.println("(1) Reservierung tätigen \n(2) Filmtermine anzeigen" +
+                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen ");
+        Scanner sc = new Scanner(System.in);
+        switch (sc.nextInt()) {
+            case 1:
+                printQuestionsToCustomer(sc);
+            case 2:
+                showScreenings();
+            case 3:
+                printSeatingPlan();
+            case 4:
+            case 5:
+                showReservationCost(booking);
+        }
     }
 
     //einfache Getter- und Setter-Methoden
@@ -163,8 +193,8 @@ public class MovieBookingSystem {
         this.movieName = movieName;
     }
 
-    public String getDate() {
-        return date;
+    private String getDate() {
+        return date + ":00";
     }
 
     private void setDate(String date) {
@@ -199,19 +229,8 @@ public class MovieBookingSystem {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     private List<Integer> getReservedSeats() {
         return reservedSeats;
     }
 
-    public void setReservedSeats(List<Integer> reservedSeats) {
-        this.reservedSeats = reservedSeats;
-    }
-
-    private Schedule getSchedule() {
-        return schedule;
-    }
 }
