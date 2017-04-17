@@ -1,6 +1,6 @@
 package BookingSystem;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Dennis on 11.04.2017.
@@ -17,12 +17,14 @@ public class Screening {
 
     private Theater theater;
     private String movie;
-    private Date date;
+    private String dateText;
+    private SimpleDateFormat date;
 
-    public Screening(String movie, Theater theater, Date date) {
+    public Screening(String movie, Theater theater, String dateText) {
         this.movie = movie;
         this.theater = theater;
-        this.date = date;
+        this.dateText = dateText;
+        date = new SimpleDateFormat(dateText);
     }
 
     //einfache Get-Methoden
@@ -34,12 +36,16 @@ public class Screening {
         return theater;
     }
 
-    public Date getDate() {
+    public SimpleDateFormat getDate() {
         return date;
     }
 
+    public String getDateText() {
+        return dateText;
+    }
+
     //TODO Datum verändern, um einem Screening Stunde und Minuten zuzuweisen.
-    public Date getDayHour() {
+    public SimpleDateFormat getDayHour() {
         return date;
     }
 

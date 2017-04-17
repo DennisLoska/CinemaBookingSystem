@@ -1,13 +1,12 @@
 package BookingSystem;
 
-import java.util.Date;
-
 /**
  * Created by Dennis on 11.04.2017.
  */
 public class Booking {
 
     private double price;
+    private final double PRICE_PER_SEAT = 8.99;
     private Customer customer;
     private Schedule schedule;
 
@@ -16,16 +15,20 @@ public class Booking {
         this.schedule = schedule;
     }
 
-    private double calcPrice(Schedule schedule) {
-        double price = 0;
-        this.price = price;
+    private double calcPrice(String movieName, String date) {
         return price;
     }
 
-    public boolean findScreening(String movieName, String rowLetter, int seatNumber, Date date) {
-        //TODO if-else mit datum und uhrzeit
-        Screening screening = schedule.getScreenings().get(movieName);
+    public boolean findScreening(String movieName, String rowLetter, int seatNumber, String date) {
+        //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
+        Screening screening = schedule.getScreenings().get(movieName+date);
         return screening.reserveSeats(rowLetter, seatNumber);
+    }
+
+    public boolean findScreening(String movieName, String rowLetter, int[] seatNumbers, String date) {
+        //TODO if-else mit datum und uhrzeit und key in movieName+date ändern bzw +uhrzeit
+        Screening screening = schedule.getScreenings().get(movieName+date);
+        return screening.reserveSeats(rowLetter, seatNumbers[0]);
     }
 
     public double getPrice() {
