@@ -23,7 +23,6 @@ public class MovieBookingSystem {
     private boolean adjoined = false;
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         MovieBookingSystem system = new MovieBookingSystem();
         system.createSystem();
         system.mainMenu();
@@ -145,7 +144,7 @@ public class MovieBookingSystem {
         return i;
     }
 
-    private boolean bookMovie() {
+    public boolean bookMovie() {
         if (isAdjoined() && getReservedSeats().size() > 1) {
             boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
             booking.calcPrice(getReservedSeats().size());
@@ -181,6 +180,13 @@ public class MovieBookingSystem {
         backToMainMenu();
     }
 
+    private void showDeleteMenu() {
+        if (reservedSeats.size() > 0)
+            booking.deleteReservation(rowLetter, reservedSeats);
+        else System.out.println("Sie haben noch nichts reserviert!\n");
+        mainMenu();
+    }
+
     private void backToMainMenu() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Möchten Sie zurück in das Hauptmenü? (J/N)");
@@ -192,7 +198,7 @@ public class MovieBookingSystem {
     private void mainMenu() {
         System.out.println("\nHauptmenü - Bitte wählen Sie eine Funktion:");
         System.out.println("(1) Reservierung tätigen \n(2) Filmtermine anzeigen" +
-                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen ");
+                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen \n");
         Scanner sc = new Scanner(System.in);
         switch (sc.nextInt()) {
             case 1:
@@ -205,7 +211,7 @@ public class MovieBookingSystem {
                 printSeatingPlan();
                 break;
             case 4:
-                booking.deleteReservation();
+                showDeleteMenu();
                 break;
             case 5:
                 showReservationCost(booking);
@@ -218,7 +224,7 @@ public class MovieBookingSystem {
         return movieName;
     }
 
-    private void setMovieName(String movieName) {
+    public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
 
@@ -226,7 +232,7 @@ public class MovieBookingSystem {
         return date + ":00";
     }
 
-    private void setDate(String date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -234,7 +240,7 @@ public class MovieBookingSystem {
         return rowLetter;
     }
 
-    private void setRowLetter(String rowLetter) {
+    public void setRowLetter(String rowLetter) {
         this.rowLetter = rowLetter;
     }
 
@@ -242,7 +248,7 @@ public class MovieBookingSystem {
         return seatNumber;
     }
 
-    private void setSeatNumber(int seatNumber) {
+    public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
 
@@ -250,7 +256,7 @@ public class MovieBookingSystem {
         return adjoined;
     }
 
-    private void setAdjoined(boolean adjoined) {
+    public void setAdjoined(boolean adjoined) {
         this.adjoined = adjoined;
     }
 
@@ -258,8 +264,16 @@ public class MovieBookingSystem {
         return customer;
     }
 
-    private List<Integer> getReservedSeats() {
+    public List<Integer> getReservedSeats() {
         return reservedSeats;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 
 }

@@ -56,4 +56,12 @@ public class Screening {
             return true;
         } else return false;
     }
+
+    public void unReserveSeat(String rowLetter, int seatNumber) {
+        String seatNr = Integer.toString(seatNumber);
+        Seat preferedSeat = theater.getSeats().get(rowLetter + seatNr);
+        if (preferedSeat.isReserved()) {
+            preferedSeat.setReserved(false);
+        }
+    }
 }
