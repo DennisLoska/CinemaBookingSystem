@@ -45,21 +45,31 @@ public class Booking {
         if (sc.next().toUpperCase().equals("J")) {
             deleteAll(rowLetter, seatNumbers);
         } else {
-            System.out.println("Bitte geben Sie die Sitzreihe des zu löschenden Platzes an:\n ");
-            rowLetter = sc.nextLine();
-            sc.nextLine();
-            System.out.println("Bitte geben Sie auch die Sitznummer an: \n");
-            int seatNumber = sc.nextInt();
-            screening.unReserveSeat(rowLetter, seatNumber);
-            System.out.println("Ihre Reservierung für den Platz " + rowLetter + seatNumber + " wurde erfolgreich gelöscht.\n");
+            deleteOneReservation(rowLetter);
         }
     }
 
     public void deleteAll(String rowLetter, List<Integer> seatNumbers) {
-        for (int i = 0; i < seatNumbers.size(); i++) {
-            screening.unReserveSeat(rowLetter, seatNumbers.get(i));
+        for (int i = 0; i <= seatNumbers.size(); i++) {
+            if (seatNumbers.size() == 0) break;
+            for (int seat : seatNumbers) {
+                screening.unReserveSeat(rowLetter, seat);
+            }
+            seatNumbers.remove(i);
+            i--;
         }
         System.out.println("Ihre Reservierungen wurden erfolgreich gelöscht.\n");
+    }
+
+    public void deleteOneReservation(String rowLetter){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bitte geben Sie die Sitzreihe des zu löschenden Platzes an:\n ");
+        rowLetter = sc.nextLine();
+        sc.nextLine();
+        System.out.println("Bitte geben Sie auch die Sitznummer an: \n");
+        int seatNumber = sc.nextInt();
+        screening.unReserveSeat(rowLetter, seatNumber);
+        System.out.println("Ihre Reservierung für den Platz " + rowLetter + seatNumber + " wurde erfolgreich gelöscht.\n");
     }
 
     public void showReservedSeats() {
