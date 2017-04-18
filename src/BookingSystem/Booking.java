@@ -43,18 +43,23 @@ public class Booking {
         System.out.println("Möchten Sie alle Reservierungen löschen? (J/N):\n");
         Scanner sc = new Scanner(System.in);
         if (sc.next().toUpperCase().equals("J")) {
-            for (int i = 0; i < seatNumbers.size(); i++) {
-                screening.unReserveSeat(rowLetter, seatNumbers.get(i));
-            }
-            System.out.println("Ihre Reservierungen wurden erfolgreich gelöscht.\n");
+            deleteAll(rowLetter, seatNumbers);
         } else {
             System.out.println("Bitte geben Sie die Sitzreihe des zu löschenden Platzes an:\n ");
-            rowLetter = sc.nextLine();sc.nextLine();
+            rowLetter = sc.nextLine();
+            sc.nextLine();
             System.out.println("Bitte geben Sie auch die Sitznummer an: \n");
             int seatNumber = sc.nextInt();
             screening.unReserveSeat(rowLetter, seatNumber);
-            System.out.println("Ihre Reservierung für den Platz " + rowLetter+seatNumber + " wurde erfolgreich gelöscht.\n");
+            System.out.println("Ihre Reservierung für den Platz " + rowLetter + seatNumber + " wurde erfolgreich gelöscht.\n");
         }
+    }
+
+    public void deleteAll(String rowLetter, List<Integer> seatNumbers) {
+        for (int i = 0; i < seatNumbers.size(); i++) {
+            screening.unReserveSeat(rowLetter, seatNumbers.get(i));
+        }
+        System.out.println("Ihre Reservierungen wurden erfolgreich gelöscht.\n");
     }
 
     public void showReservedSeats() {
