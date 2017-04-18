@@ -217,7 +217,8 @@ public class MovieBookingSystem {
             case 5:
                 showReservationCost(booking);
                 break;
-            case 6: System.exit(0);
+            case 6:
+                System.exit(0);
         }
     }
 
