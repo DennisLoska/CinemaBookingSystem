@@ -136,6 +136,7 @@ public class MovieBookingSystem {
         System.out.println("Bitte geben Sie nun die gewünschte Sitznummer an (1-20): ");
         int nextSeat = sc.nextInt();
         i++;
+        //TODO Algorithmus zum Reservieren von benachbarten Plätzen optimieren
         if (nextSeat == getSeatNumber() + 1 || nextSeat == getSeatNumber() - 1) {
             setAdjoined(true);
             setSeatNumber(nextSeat);
@@ -198,7 +199,7 @@ public class MovieBookingSystem {
     private void mainMenu() {
         System.out.println("\nHauptmenü - Bitte wählen Sie eine Funktion:");
         System.out.println("(1) Reservierung tätigen \n(2) Filmtermine anzeigen" +
-                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen \n");
+                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen \n(6) Beenden \n");
         Scanner sc = new Scanner(System.in);
         switch (sc.nextInt()) {
             case 1:
@@ -216,6 +217,7 @@ public class MovieBookingSystem {
             case 5:
                 showReservationCost(booking);
                 break;
+            case 6: System.exit(0);
         }
     }
 

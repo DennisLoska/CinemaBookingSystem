@@ -39,7 +39,6 @@ public class Booking {
     }
 
     public void deleteReservation(String rowLetter, List<Integer> seatNumbers) {
-        //TODO Reservierungen wieder löschen
         System.out.println("Möchten Sie alle Reservierungen löschen? (J/N):\n");
         Scanner sc = new Scanner(System.in);
         if (sc.next().toUpperCase().equals("J")) {
@@ -65,7 +64,6 @@ public class Booking {
         Scanner sc = new Scanner(System.in);
         System.out.println("Bitte geben Sie die Sitzreihe des zu löschenden Platzes an:\n ");
         rowLetter = sc.nextLine();
-        sc.nextLine();
         System.out.println("Bitte geben Sie auch die Sitznummer an: \n");
         int seatNumber = sc.nextInt();
         screening.unReserveSeat(rowLetter, seatNumber);
