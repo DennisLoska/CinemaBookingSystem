@@ -1,5 +1,6 @@
 package BookingSystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -60,7 +61,7 @@ public class Booking {
         System.out.println("Ihre Reservierungen wurden erfolgreich gelöscht.\n");
     }
 
-    public void deleteOneReservation(String rowLetter){
+    public void deleteOneReservation(String rowLetter) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Bitte geben Sie die Sitzreihe des zu löschenden Platzes an:\n ");
         rowLetter = sc.nextLine();
@@ -70,8 +71,16 @@ public class Booking {
         System.out.println("Ihre Reservierung für den Platz " + rowLetter + seatNumber + " wurde erfolgreich gelöscht.\n");
     }
 
-    public void showReservedSeats() {
+    public void showOwnReservedSeats(List<Integer> customersReservedSeats, String rowLetter) {
         //TODO Liste von reservierten Sitzen printen
+        if (customersReservedSeats.size() == 0) {
+            System.out.println("Sie haben noch nichts reserviert!");
+        } else {
+            System.out.println("Sie haben folgende Sitze Reserviert: ");
+            for (int i = 0; i < customersReservedSeats.size(); i++) {
+                System.out.print(rowLetter + " " + customersReservedSeats.get(i) + "\t");
+            }
+        }
     }
 
     public double getPrice() {

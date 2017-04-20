@@ -145,6 +145,7 @@ public class MovieBookingSystem {
         return i;
     }
 
+    //TODO bookMovie()-Methode in die Booking-Klasse refactoren.
     public boolean bookMovie() {
         if (isAdjoined() && getReservedSeats().size() > 1) {
             boolean reservationSuccessful = booking.findScreening(getMovieName(), getRowLetter(), getReservedSeats(), getDate());
@@ -199,7 +200,7 @@ public class MovieBookingSystem {
     private void mainMenu() {
         System.out.println("\nHauptmenü - Bitte wählen Sie eine Funktion:");
         System.out.println("(1) Reservierung tätigen \n(2) Filmtermine anzeigen" +
-                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen \n(6) Beenden \n");
+                "\n(3) Sitzplan anzeigen \n(4) Reservierung löschen \n(5) Reservierungskosten anzeigen \n(6)Reservierung anzeigen \n(7) Beenden \n");
         Scanner sc = new Scanner(System.in);
         switch (sc.nextInt()) {
             case 1:
@@ -218,6 +219,10 @@ public class MovieBookingSystem {
                 showReservationCost(booking);
                 break;
             case 6:
+                booking.showOwnReservedSeats(reservedSeats, getRowLetter());
+                backToMainMenu();
+                break;
+            case 7:
                 System.exit(0);
         }
     }
