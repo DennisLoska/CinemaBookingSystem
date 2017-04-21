@@ -72,7 +72,6 @@ public class Booking {
     }
 
     public void showOwnReservedSeats(List<Integer> customersReservedSeats, String rowLetter) {
-        //TODO Liste von reservierten Sitzen printen
         if (customersReservedSeats.size() == 0) {
             System.out.println("Sie haben noch nichts reserviert!");
         } else {
